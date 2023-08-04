@@ -4,6 +4,9 @@ import {Category} from "../../models/category";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
+import {CustomDialogComponent} from "../../shared/custom-dialog/custom-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-category',
@@ -11,7 +14,8 @@ import {MatSort} from "@angular/material/sort";
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  constructor(private utilsService: UtilsService,) {
+  constructor(private utilsService: UtilsService,
+              public dialog: MatDialog, public snackBar: MatSnackBar) {
   }
 
   loading = true
@@ -26,7 +30,8 @@ export class CategoryComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  ngOnInit(): void {
+  loadData() {
+    this.loading = true
     this.utilsService.getCategories().subscribe({
       next: v => {
         console.log(v)
@@ -41,17 +46,45 @@ export class CategoryComponent implements OnInit {
       },
       error: e => {
         this.loading = false
-        alert('hay error en el server :' + e)
-        console.log(e)
+        alert(e.message)
       },
       complete: () => {
         this.loading = false
-        console.log('complete')
       }
     })
   }
 
-  deleteCategory(id: string) {
+  ngOnInit(): void {
+    this.loadData()
+  }
 
+  deleteCategory(id: string) {
+    const dialogRef = this.dialog.open(CustomDialogComponent, {
+      width: '350px',
+      data: {mensaje: 'Are you sure you want to delete the category?'},
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'accept') {
+        this.utilsService.deleteCategory(id).subscribe({
+          next: (e: any) => {
+            console.log(e)
+            if (e.success) {
+              this.loadData()
+              this.snackBar.open('The Category has been successfully deleted!', '', {
+                duration: 3000
+              })
+            } else
+              this.snackBar.open(e.message, '', {
+                duration: 5000
+              })
+          },
+          error: e => {
+            this.snackBar.open(e.message, '', {
+              duration: 5000
+            })
+          }
+        })
+      }
+    });
   }
 }

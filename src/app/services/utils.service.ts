@@ -29,8 +29,8 @@ export class UtilsService {
     return this.http.put(this.url + 'Category/' + id, formData)
   }
 
-  deleteCategory(formData: any, id: string) {
-    return this.http.post(this.url + 'Category/' + id + '/Remove', formData)
+  deleteCategory(id: string) {
+    return this.http.post(this.url + 'Category/' + id + '/Remove', {})
   }
 
   getCategory(id: string) {

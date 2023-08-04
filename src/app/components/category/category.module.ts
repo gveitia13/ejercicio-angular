@@ -5,11 +5,15 @@ import {MatTableModule} from "@angular/material/table";
 import {HttpClientModule} from "@angular/common/http";
 import {CategoryRoutingModule} from "./category-routing.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MaterialModule} from "../../shared/material/material.module";
+import { FormCategoryComponent } from './components/form-category/form-category.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
-    CategoryComponent
+    CategoryComponent,
+    FormCategoryComponent
   ],
   exports: [
     CategoryComponent
@@ -20,6 +24,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     HttpClientModule,
     CategoryRoutingModule,
     MatProgressSpinnerModule,
+    MaterialModule,
+    ReactiveFormsModule,
   ]
 })
 export class CategoryModule {

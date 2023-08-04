@@ -16,8 +16,24 @@ export class UtilsService {
   getCategories(): Observable<any> {
     return this.http.post(this.url + 'Category/Search', {
       "pageNo": 0,
-      "pageSize": 1,
+      "pageSize": 100,
       "filters": null
     })
+  }
+
+  addCategory(formData: any) {
+    return this.http.post(this.url + 'Category', formData)
+  }
+
+  editCategory(formData: any, id: string) {
+    return this.http.put(this.url + 'Category/' + id, formData)
+  }
+
+  deleteCategory(formData: any, id: string) {
+    return this.http.post(this.url + 'Category/' + id + '/Remove', formData)
+  }
+
+  getCategory(id: string) {
+    return this.http.post(this.url + 'Category/' + id, {})
   }
 }

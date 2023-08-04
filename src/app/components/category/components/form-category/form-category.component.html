@@ -1,0 +1,40 @@
+<div class="spinner-container" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="!loading">
+  <h1>{{action}} Category</h1>
+
+  <form [formGroup]="myFrom" autocomplete="off" (submit)="saveCategory()">
+    <div class="">
+      <mat-form-field [style.font-size.px]="16" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <div *ngIf="myFrom.get('name')?.hasError('required') && myFrom.get('name')?.touched"
+           style="margin-top: -20px">
+        <span class="mda-form-msg">This field is <strong>required</strong>.</span>
+      </div>
+    </div>
+    <div class="">
+      <mat-form-field [style.font-size.px]="16" appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+      <div *ngIf="myFrom.get('description')?.hasError('required') && myFrom.get('description')?.touched"
+           style="margin-top: -20px">
+        <span class="mda-form-msg">This field is <strong>required</strong>.</span>
+      </div>
+    </div>
+    <div class="spinner-container" *ngIf="loadingForm">
+      <mat-spinner diameter="30" strokeWidth="4"></mat-spinner>
+    </div>
+    <div class="buttons-form">
+      <button mat-raised-button type="button" routerLink="/category/list">Cancel</button>
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="myFrom.invalid || myFrom.disabled">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

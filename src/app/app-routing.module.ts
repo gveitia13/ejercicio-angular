@@ -4,7 +4,11 @@ import {AppComponent} from "./app.component";
 
 const routes: Routes = [
   // {path: '', component: AppComponent},
-  {path: '', loadChildren: () => import('../app/components/category/category.module').then(m => m.CategoryModule)},
+  {path: 'category', redirectTo: 'category/list'},
+  {
+    path: 'category',
+    loadChildren: () => import('../app/components/category/category.module').then(m => m.CategoryModule),
+  },
   {path: '', loadChildren: () => import('../app/components/item/item.module').then(m => m.ItemModule)},
   {path: '**', pathMatch: "full", redirectTo: ''}
 

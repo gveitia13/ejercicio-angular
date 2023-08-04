@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UtilsService} from "../../../../services/utils.service";
+import {CategoryService} from "../../../../services/category.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -16,7 +16,7 @@ export class FormCategoryComponent implements OnInit {
   action: string = 'Add';
   loadingForm = false;
 
-  constructor(private fb: FormBuilder, private utilsService: UtilsService,
+  constructor(private fb: FormBuilder, private categoryService: CategoryService,
               public snackBar: MatSnackBar, private aRoute: ActivatedRoute,
               private router: Router) {
     this.myFrom = this.fb.group({
@@ -31,9 +31,8 @@ export class FormCategoryComponent implements OnInit {
     this.myFrom.disable()
     this.loadingForm = true
     if (!this.idCategory)
-      this.utilsService.addCategory(formData).subscribe({
+      this.categoryService.addCategory(formData).subscribe({
         next: (v: any) => {
-          console.log(v)
           this.myFrom.enable()
           this.loadingForm = false
           if (v.success) {
@@ -58,7 +57,7 @@ export class FormCategoryComponent implements OnInit {
         }
       })
     else
-      this.utilsService.editCategory(formData, this.idCategory).subscribe({
+      this.categoryService.editCategory(formData, this.idCategory).subscribe({
         next: (v: any) => {
           console.log(v)
           this.myFrom.enable()
@@ -96,7 +95,7 @@ export class FormCategoryComponent implements OnInit {
   }
 
   isEdit() {
-    this.utilsService.getCategory(this.idCategory).subscribe({
+    this.categoryService.getCategory(this.idCategory).subscribe({
       next: (v: any) => {
         this.loading = false
         this.myFrom.patchValue(v.data)

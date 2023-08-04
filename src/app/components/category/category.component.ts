@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UtilsService} from "../../services/utils.service";
+import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
@@ -14,7 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
-  constructor(private utilsService: UtilsService,
+  constructor(private categoryService: CategoryService,
               public dialog: MatDialog, public snackBar: MatSnackBar) {
   }
 
@@ -32,7 +32,7 @@ export class CategoryComponent implements OnInit {
 
   loadData() {
     this.loading = true
-    this.utilsService.getCategories().subscribe({
+    this.categoryService.getCategories().subscribe({
       next: v => {
         console.log(v)
         this.categories_list = v.items.slice()
@@ -65,7 +65,7 @@ export class CategoryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'accept') {
-        this.utilsService.deleteCategory(id).subscribe({
+        this.categoryService.deleteCategory(id).subscribe({
           next: (e: any) => {
             console.log(e)
             if (e.success) {

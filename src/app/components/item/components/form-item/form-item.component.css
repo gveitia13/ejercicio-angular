@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+form {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+form mat-form-field {
+  width: 100%;
+}
+.buttons-form *{
+  margin: 5px;
+}

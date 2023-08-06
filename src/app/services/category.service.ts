@@ -13,10 +13,10 @@ export class CategoryService {
 
   url = environment.url
 
-  getCategories(): Observable<any> {
+  getCategories(page = 0): Observable<any> {
     return this.http.post(this.url + 'Category/Search', {
-      "pageNo": 0,
-      "pageSize": 100,
+      "pageNo": page,
+      "pageSize": 5,
       "filters": null
     })
   }

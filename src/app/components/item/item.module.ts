@@ -12,6 +12,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 
@@ -20,19 +21,20 @@ import {MatSelectModule} from "@angular/material/select";
     ItemComponent,
     FormItemComponent
   ],
-  imports: [
-    CommonModule,
-    ItemRoutingModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-  ],
+    imports: [
+        CommonModule,
+        ItemRoutingModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatPaginatorModule,
+    ],
   exports:[
     ItemComponent
   ]

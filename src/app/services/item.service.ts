@@ -10,12 +10,13 @@ export class ItemService {
 
   constructor(private http: HttpClient) {
   }
+
   url = environment.url
 
-  getItems(): Observable<any> {
+  getItems(page = 0): Observable<any> {
     return this.http.post(this.url + 'Item/Search', {
-      "pageNo": 0,
-      "pageSize": 100,
+      "pageNo": page,
+      "pageSize": 5,
       "filters": null
     })
   }

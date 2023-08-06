@@ -50,6 +50,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <br>
+  <mat-paginator [length]="totalItems" (page)="handlePageEvent($event)" pageIndex="{{pageIndex}}" [pageSize]="5"
+                 aria-label="Select page"></mat-paginator>
   <div [align]="'center'">
     <button mat-raised-button color="primary" routerLink="/item/add">Add Item</button>
   </div>

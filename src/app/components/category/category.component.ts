@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CategoryService} from "../../services/category.service";
 import {Category} from "../../models/category";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
 import {CustomDialogComponent} from "../../shared/custom-dialog/custom-dialog.component";
@@ -22,25 +22,22 @@ export class CategoryComponent implements OnInit {
   dataSource: MatTableDataSource<Category> = new MatTableDataSource()
   displayedColumns = ['id', 'name', 'description', 'options']
   categories_list: Category[] = []
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null
-  @ViewChild(MatSort) sort: MatSort | null = null;
+  totalItems = 0
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  loadData() {
+  loadData(page = 0) {
     this.loading = true
-    this.categoryService.getCategories().subscribe({
+    this.categoryService.getCategories(page).subscribe({
       next: v => {
         console.log(v)
         this.categories_list = v.items.slice()
-        // .map((e: Category) => new Category(e.id, e.name, e.description))
+        this.totalItems = v.total
         console.log(this.categories_list)
         this.dataSource = new MatTableDataSource(this.categories_list)
-        this.dataSource.paginator = this.paginator
-        this.dataSource.sort = this.sort
         this.loading = false
         console.log(this.dataSource)
       },
@@ -86,5 +83,13 @@ export class CategoryComponent implements OnInit {
         })
       }
     });
+  }
+
+  pageIndex = 0
+
+  handlePageEvent(e: PageEvent) {
+    console.log(e.pageIndex);
+    this.loadData(e.pageIndex)
+    this.pageIndex = e.pageIndex
   }
 }
